@@ -3,6 +3,7 @@ extends RigidBody2D
 export (int) var drag_speed
 export (int) var hold_speed
 export (int) var maximum_drag_force
+export (float) var drag_force_minimum
 export (float) var drag_release_time
 var dragging
 var holding_pos
@@ -12,33 +13,46 @@ func _ready():
 	InputManager.connect("single_touch", self, "touch")
 	InputManager.connect("single_drag", self, "drag")
 	timer_drag_release.set_one_shot(true)
-	timer_drag_release.set_wait_time(drag_release_time)
 	timer_drag_release.connect("timeout", self, "release_timeout")
 
-func _process(delta):
-	# print(linear_velocity)
-	rotate(linear_velocity.length() * delta)
-
 func _physics_process(delta):
+	# rotation
+	if (dragging):
+		rotate(linear_velocity.length() * delta)
+	else:
+		look_at(get_transform().get_origin() + linear_velocity.normalized() * delta)
+	
+	# moving to touch
 	if holding_pos != null and not dragging:
 		var dir = (holding_pos - get_transform().origin).normalized()
 		apply_central_impulse(dir * hold_speed)
 
+# signal method
 func touch(event):
 	if (event.pressed):
 		hold_this(event.position)
 	else:
 		hold_this(null)
 
+# signal method
 func drag(event):
-	apply_central_impulse(event.speed / maximum_drag_force * drag_speed)
+	if (event.speed.length() < drag_force_minimum):
+		return
+	
+	var normalised_speed = event.speed / maximum_drag_force
+	apply_central_impulse(normalised_speed * drag_speed)
+	
 	dragging = true
 	hold_this(event.position)
-	timer_drag_release.start()
+	start_timer(drag_release_time * normalised_speed.length())
 
 func hold_this(pos):
 	holding_pos = pos
 
+# signal method
 func release_timeout():
 	dragging = false
-	# stop spinning
+
+func start_timer(time):
+	timer_drag_release.set_wait_time(time)
+	timer_drag_release.start()

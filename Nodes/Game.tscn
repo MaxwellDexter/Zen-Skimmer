@@ -23,7 +23,8 @@ script = ExtResource( 1 )
 drag_speed = 100
 hold_speed = 2
 maximum_drag_force = 8000
-drag_release_time = 0.5
+drag_force_minimum = 50.0
+drag_release_time = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 1 )
