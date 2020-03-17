@@ -22,8 +22,7 @@ linear_damp = 1.7
 script = ExtResource( 1 )
 drag_speed = 100
 hold_speed = 2
-maximum_drag_force = 10000
-drag_speed_cutoff = 50
+maximum_drag_force = 8000
 drag_release_time = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
