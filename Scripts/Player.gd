@@ -9,11 +9,18 @@ var dragging
 var holding_pos
 onready var timer_drag_release = get_node("Timer")
 
+# camera stuff
+var camera
+var viewport_size
+
 func _ready():
 	InputManager.connect("single_touch", self, "touch")
 	InputManager.connect("single_drag", self, "drag")
 	timer_drag_release.set_one_shot(true)
 	timer_drag_release.connect("timeout", self, "release_timeout")
+	
+	camera = get_parent().get_node("MainCamera")
+	viewport_size = get_viewport().get_visible_rect().size
 
 func _physics_process(delta):
 	# rotation
@@ -30,7 +37,7 @@ func _physics_process(delta):
 # signal method
 func touch(event):
 	if (event.pressed):
-		hold_this(event.position)
+		hold_this(get_position_on_screen(event.position))
 	else:
 		hold_this(null)
 
@@ -56,3 +63,6 @@ func release_timeout():
 func start_timer(time):
 	timer_drag_release.set_wait_time(time)
 	timer_drag_release.start()
+
+func get_position_on_screen(pos):
+	return camera.get_camera_screen_center() - viewport_size/2 + pos
