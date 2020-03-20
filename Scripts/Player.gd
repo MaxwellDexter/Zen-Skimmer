@@ -9,6 +9,10 @@ var dragging
 var holding_pos
 onready var timer_drag_release = get_node("Timer")
 
+# score stuff
+export (int) var pickup_points
+var total_score
+
 # camera stuff
 var camera
 var viewport_size
@@ -21,6 +25,8 @@ func _ready():
 	
 	camera = get_parent().get_node("MainCamera")
 	viewport_size = get_viewport().get_visible_rect().size
+	
+	total_score = 0
 
 func _physics_process(delta):
 	# rotation
@@ -66,3 +72,7 @@ func start_timer(time):
 
 func get_position_on_screen(pos):
 	return camera.get_camera_screen_center() - viewport_size/2 + pos
+
+func add_score():
+	total_score += pickup_points
+	print(total_score)

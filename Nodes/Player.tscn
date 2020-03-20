@@ -16,6 +16,7 @@ hold_speed = 2
 maximum_drag_force = 8000
 drag_force_minimum = 50.0
 drag_release_time = 10.0
+pickup_points = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
