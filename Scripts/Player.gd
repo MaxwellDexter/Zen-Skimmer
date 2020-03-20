@@ -31,13 +31,13 @@ func _physics_process(delta):
 	
 	# moving to touch
 	if holding_pos != null and not dragging:
-		var dir = (holding_pos - get_transform().origin).normalized()
+		var dir = (get_position_on_screen(holding_pos) - get_transform().origin).normalized()
 		apply_central_impulse(dir * hold_speed)
 
 # signal method
 func touch(event):
 	if (event.pressed):
-		hold_this(get_position_on_screen(event.position))
+		hold_this(event.position)
 	else:
 		hold_this(null)
 
