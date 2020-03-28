@@ -26,6 +26,5 @@ func spawn_them_all():
 
 func pickup_deleted():
 	current_pickups -= 1
-	print(current_pickups)
 	if current_pickups < 1:
 		spawn_them_all()

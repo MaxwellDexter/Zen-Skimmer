@@ -8,9 +8,11 @@ export (float) var drag_release_time
 var dragging
 var holding_pos
 onready var timer_drag_release = get_node("Timer")
+onready var sprite = get_node("Sprite")
 
 # score stuff
 export (int) var pickup_points
+export (int) var pickups_per_tail
 var total_score
 
 # camera stuff
@@ -34,10 +36,9 @@ func _ready():
 
 func _physics_process(delta):
 	# rotation
-	if (dragging):
-		rotate(linear_velocity.length() * delta)
-	else:
-		look_at(get_transform().get_origin() + linear_velocity.normalized() * delta)
+	if dragging:
+		sprite.rotate((linear_velocity.x + linear_velocity.y) * delta * 0.05)
+	look_at(get_transform().get_origin() + linear_velocity.normalized() * delta)
 	
 	# moving to touch
 	if holding_pos != null and not dragging:
@@ -61,7 +62,8 @@ func drag(event):
 	
 	dragging = true
 	hold_this(event.position)
-	start_timer(drag_release_time * normalised_speed.length())
+	var time = drag_release_time * normalised_speed.length()
+	start_timer(time)
 
 func hold_this(pos):
 	holding_pos = pos
@@ -69,6 +71,7 @@ func hold_this(pos):
 # signal method
 func release_timeout():
 	dragging = false
+	sprite.return_to_zero()
 
 func start_timer(time):
 	timer_drag_release.set_wait_time(time)
@@ -79,4 +82,3 @@ func get_position_on_screen(pos):
 
 func add_score():
 	total_score += pickup_points
-	print(total_score)
