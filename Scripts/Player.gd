@@ -17,6 +17,10 @@ var total_score
 var camera
 var viewport_size
 
+# notes
+# what if when you pick up a certain amount of them
+# you get a magnet power up so you can collect the rest of them easier
+
 func _ready():
 	InputManager.connect("single_touch", self, "touch")
 	InputManager.connect("single_drag", self, "drag")

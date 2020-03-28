@@ -21,4 +21,5 @@ smoothing_speed = 7.4
 script = ExtResource( 3 )
 
 [node name="Pickup Spawner" parent="." instance=ExtResource( 4 )]
-spawn_radius = 1000
+space_between_pickups = 50
+spawn_radius = 2000
