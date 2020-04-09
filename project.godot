@@ -74,6 +74,11 @@ click={
 
 pointing/emulate_touch_from_mouse=true
 
+[network]
+
+limits/debugger_stdout/max_messages_per_frame=100
+limits/debugger_stdout/max_errors_per_frame=100
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

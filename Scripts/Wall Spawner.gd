@@ -4,8 +4,8 @@ onready var wall_node = preload("res://Nodes/Wall.tscn")
 export (float) var wall_thickness
 var walls
 
-func _ready():
-	spawn_walls(2000, 2000)
+func begin_level(diameter):
+	spawn_walls(diameter, diameter)
 
 func spawn_walls(width, height):
 	width /= 2
