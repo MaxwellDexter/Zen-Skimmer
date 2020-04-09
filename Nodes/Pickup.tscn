@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Pickup.gd" type="Script" id=1]
 [ext_resource path="res://Textures/temp_pickup.png" type="Texture" id=2]
-[ext_resource path="res://Audio/SFX_Pickup_short.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/SFX_Pickup_3.5.wav" type="AudioStream" id=3]
+[ext_resource path="res://Scripts/RandomNote.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -14,10 +15,20 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.0293961, 0.0293941 )
 scale = Vector2( 0.22, 0.22 )
 texture = ExtResource( 2 )
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
+volume_db = -20.0
+
+[node name="Randomiser" type="Node" parent="."]
+script = ExtResource( 4 )
+scale_type = 4
+octave_amount_up = 3
+octave_amount_down = 3
+positive_custom = [ 0, 4, 5, 9 ]
+negative_custom = [ 0, 5 ]
 [connection signal="body_entered" from="." to="." method="_on_Pickup_body_entered"]
 [connection signal="finished" from="Sound" to="." method="_on_AudioStreamPlayer2D_finished"]

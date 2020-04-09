@@ -3,6 +3,7 @@ extends Area2D
 var audio
 var sprite
 var picked_up
+onready var random_note = get_node("Randomiser")
 
 func _ready():
 	picked_up = false
@@ -24,6 +25,6 @@ func _on_AudioStreamPlayer2D_finished():
 	queue_free()
 
 func play_sound():
-	audio.set_pitch_scale(rand_range(.5,1.5))
+	audio.set_pitch_scale(random_note.get_random_note())
 	audio.play()
 	
