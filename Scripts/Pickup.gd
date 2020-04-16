@@ -1,18 +1,21 @@
-extends RigidBody2D
+extends Area2D
 
 var audio
 var sprite
-onready var random_note = get_node("Randomiser")
 var picked_up
+onready var random_note = get_node("Randomiser")
 
 func _ready():
+	picked_up = false
 	audio = get_node("Sound")
 	sprite = get_node("Sprite")
-	picked_up = false
 
-func player_hit():
-	sprite.hide()
-	play_sound()
+func _on_Pickup_body_entered(body):
+	if body.get_name() == "Player" and not picked_up:
+		body.add_score()
+		sprite.hide()
+		play_sound()
+		picked_up = true
 
 func _on_AudioStreamPlayer2D_finished():
 	# sound is done
@@ -24,3 +27,4 @@ func _on_AudioStreamPlayer2D_finished():
 func play_sound():
 	audio.set_pitch_scale(random_note.get_random_note())
 	audio.play()
+	
