@@ -2,7 +2,6 @@ extends Node2D
 
 onready var wall_node = preload("res://Nodes/Wall.tscn")
 export (float) var wall_thickness
-var walls
 
 func begin_level(diameter):
 	spawn_walls(diameter, diameter)
