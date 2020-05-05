@@ -3,6 +3,8 @@ extends Area2D
 var audio
 var sprite
 var picked_up
+var player
+export (float) var fly_speed
 onready var random_note = get_node("Randomiser")
 
 func _ready():
@@ -28,3 +30,14 @@ func play_sound():
 	audio.set_pitch_scale(random_note.get_random_note())
 	audio.play()
 	
+func start_flying_to_player(player_obj):
+	player = player_obj
+
+func _process(delta):
+	fly_to_player(delta)
+
+func fly_to_player(delta):
+	if player == null:
+		return
+	var smoothed_velocity = (player.position - position) * fly_speed * delta
+	position += smoothed_velocity

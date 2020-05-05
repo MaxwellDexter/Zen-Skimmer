@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Textures/temp_player.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 100.0
 
 [node name="Player" type="RigidBody2D"]
 mass = 0.170408
@@ -17,13 +20,15 @@ hold_speed = 2
 maximum_drag_force = 8000
 drag_force_minimum = 50.0
 drag_release_time = 10.0
+magnet_area_min = 50.0
+magnet_area_max = 200.0
+magnet_growth_rate = 0.1
 pickup_points = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-editor/display_folded = true
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
 return_time = 0.5
@@ -31,3 +36,10 @@ return_time = 0.5
 [node name="Tween" type="Tween" parent="Sprite"]
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Magnet Area" type="Area2D" parent="."]
+monitorable = false
+
+[node name="Magnet Shape" type="CollisionShape2D" parent="Magnet Area"]
+shape = SubResource( 2 )
+[connection signal="area_entered" from="Magnet Area" to="." method="_on_Magnet_Area_area_entered"]

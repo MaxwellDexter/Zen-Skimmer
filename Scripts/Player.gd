@@ -5,10 +5,14 @@ export (int) var hold_speed
 export (int) var maximum_drag_force
 export (float) var drag_force_minimum
 export (float) var drag_release_time
+export (float) var magnet_area_min
+export (float) var magnet_area_max
+export (float) var magnet_growth_rate
 var dragging
 var holding_pos
 onready var timer_drag_release = get_node("Timer")
 onready var sprite = get_node("Sprite")
+onready var magnet_shape = get_node("Magnet Area/Magnet Shape")
 
 # score stuff
 export (int) var pickup_points
@@ -82,3 +86,12 @@ func get_position_on_screen(pos):
 
 func add_score():
 	total_score += pickup_points
+	calc_magnet_area()
+
+func calc_magnet_area():
+	var radius = clamp(total_score * magnet_growth_rate, magnet_area_min, magnet_area_max)
+	magnet_shape.shape.radius = radius
+
+func _on_Magnet_Area_area_entered(area):
+	if "Pickup" in area.get_name():
+		area.start_flying_to_player(self)
