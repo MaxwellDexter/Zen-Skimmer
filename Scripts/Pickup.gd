@@ -4,6 +4,7 @@ var audio
 var sprite
 var picked_up
 var player
+var speed_mod
 export (float) var fly_speed
 onready var random_note = get_node("Randomiser")
 
@@ -11,6 +12,7 @@ func _ready():
 	picked_up = false
 	audio = get_node("Sound")
 	sprite = get_node("Sprite")
+	speed_mod = randf() + 0.5 # between 0.5 and 1.5
 
 func _on_Pickup_body_entered(body):
 	if body.get_name() == "Player" and not picked_up:
@@ -39,5 +41,5 @@ func _process(delta):
 func fly_to_player(delta):
 	if player == null:
 		return
-	var smoothed_velocity = (player.position - position) * fly_speed * delta
+	var smoothed_velocity = (player.position - position) * fly_speed * delta * speed_mod
 	position += smoothed_velocity
