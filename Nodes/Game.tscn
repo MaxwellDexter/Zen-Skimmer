@@ -26,6 +26,6 @@ script = ExtResource( 3 )
 
 [node name="TailHolder" type="Node2D" parent="."]
 script = ExtResource( 4 )
-offset = 30
+offset = 50
 
 [node name="Level Loader" parent="." instance=ExtResource( 5 )]

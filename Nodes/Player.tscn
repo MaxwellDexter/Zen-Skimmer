@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://Textures/temp_player.png" type="Texture" id=2]
+[ext_resource path="res://Textures/player.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/SpriteSpin.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
+
+[sub_resource type="StreamTexture" id=3]
+flags = 4
+load_path = "res://.import/player.png-37d6d449c686f6028362b8d8a235ada7.stex"
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 100.0
@@ -29,7 +33,11 @@ pickup_points = 10
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+rotation = 1.5708
+scale = Vector2( 0.2, 0.2 )
+z_index = 1
+texture = SubResource( 3 )
+normal_map = ExtResource( 2 )
 script = ExtResource( 3 )
 return_time = 0.5
 
@@ -41,5 +49,6 @@ return_time = 0.5
 monitorable = false
 
 [node name="Magnet Shape" type="CollisionShape2D" parent="Magnet Area"]
+visible = false
 shape = SubResource( 2 )
 [connection signal="area_entered" from="Magnet Area" to="." method="_on_Magnet_Area_area_entered"]
