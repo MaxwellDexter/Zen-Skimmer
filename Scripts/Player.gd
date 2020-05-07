@@ -19,14 +19,11 @@ onready var magnet_shape = get_node("Magnet Area/Magnet Shape")
 export (int) var pickup_points
 export (int) var pickups_per_tail
 var total_score
+var level_score
 
 # camera stuff
 var camera
 var viewport_size
-
-# notes
-# what if when you pick up a certain amount of them
-# you get a magnet power up so you can collect the rest of them easier
 
 func _ready():
 	InputManager.connect("single_touch", self, "touch")
@@ -38,6 +35,7 @@ func _ready():
 	viewport_size = get_viewport().get_visible_rect().size
 	
 	total_score = 0
+	level_score = 0
 
 func _physics_process(delta):
 	# rotation
@@ -88,12 +86,18 @@ func get_position_on_screen(pos):
 
 func add_score():
 	total_score += pickup_points
+	level_score += pickup_points
 	calc_magnet_area()
 
 func calc_magnet_area():
-	var radius = clamp(total_score * magnet_growth_rate, magnet_area_min, magnet_area_max)
+	var radius = clamp(level_score * magnet_growth_rate, magnet_area_min, magnet_area_max)
 	magnet_shape.shape.radius = radius
 
 func _on_Magnet_Area_area_entered(area):
 	if "Pickup" in area.get_name():
 		area.start_flying_to_player(self)
+
+func reset(new_pos):
+	linear_velocity = Vector2(0,0)
+	position = new_pos
+	level_score = 0

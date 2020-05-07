@@ -1,0 +1,11 @@
+{
+	"id": 1,
+	"sfx_pickup": "SFX_Pickup_3.5",
+	"diameter": 2000,
+	"pickups": 20,
+	"player_spawn":
+	{
+		"x": 0,
+		"y": 0
+	}
+}

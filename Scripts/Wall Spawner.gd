@@ -5,6 +5,7 @@ export (float) var wall_thickness
 var walls
 
 func begin_level(diameter):
+	clear_children()
 	spawn_walls(diameter, diameter)
 
 func spawn_walls(width, height):
@@ -21,3 +22,7 @@ func spawn_wall(xpos, ypos, width, height):
 	wall.position.y = ypos
 	wall.set_size(width, height)
 	add_child(wall)
+
+func clear_children():
+	for i in get_children():
+		i.queue_free()

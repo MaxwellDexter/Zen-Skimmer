@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var pickup_node = preload("res://Nodes/Pickup.tscn")
-export (int) var pickups_per_row
+var pickups_per_row
 var current_pickups
 var stream
 var sound_scale
@@ -10,7 +10,8 @@ signal pickups_gone_signal
 func _ready():
 	current_pickups = 0
 
-func begin_level(diameter):
+func begin_level(diameter, pickups):
+	pickups_per_row = pickups
 	spawn_them_all(diameter)
 
 func set_audio(the_stream, the_scale):

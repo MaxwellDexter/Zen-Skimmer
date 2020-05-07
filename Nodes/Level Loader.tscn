@@ -6,10 +6,8 @@
 
 [node name="Level Loader" type="Node2D"]
 script = ExtResource( 1 )
-diameter = 1000.0
 
 [node name="Pickup Spawner" parent="." instance=ExtResource( 2 )]
-pickups_per_row = 15
 
 [node name="Wall Spawner" parent="." instance=ExtResource( 3 )]
 [connection signal="pickups_gone_signal" from="Pickup Spawner" to="." method="_on_Pickup_Spawner_pickups_gone_signal"]
