@@ -3,6 +3,8 @@ extends Node2D
 onready var pickup_node = preload("res://Nodes/Pickup.tscn")
 export (int) var pickups_per_row
 var current_pickups
+var stream
+var sound_scale
 signal pickups_gone_signal
 
 func _ready():
@@ -10,6 +12,10 @@ func _ready():
 
 func begin_level(diameter):
 	spawn_them_all(diameter)
+
+func set_audio(the_stream, the_scale):
+	stream = the_stream
+	sound_scale = the_scale
 
 func spawn_them_all(spawn_diameter):
 	# resizing box to buffer
@@ -29,8 +35,8 @@ func spawn_them_all(spawn_diameter):
 		for j in range(pickup_num):
 			# make node
 			var pickup = pickup_node.instance()
-			pickup.position = pos
 			add_child(pickup)
+			pickup.prime_pickup(pos, stream, sound_scale)
 			# do maths
 			pos.x += space_between_pickups
 			current_pickups += 1

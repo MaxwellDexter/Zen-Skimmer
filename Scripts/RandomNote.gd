@@ -1,19 +1,5 @@
 extends Node
 
-# constants for semitone scale multiplication
-const ST_POS = 1.0594630944
-const ST_NEG = 0.9438743127
-
-# scale enum for holding types of scales to play
-# should map to values in dictionary
-enum SCALE {
-	Major,
-	Minor,
-	MajorPentatonic,
-	MinorPentatonic,
-	Custom
-}
-
 ################
 # Scale Arrays #
 ################
@@ -37,7 +23,7 @@ var scales_dict
 ####################
 # Public Variables #
 ####################
-export (SCALE) var scale_type
+export (RNoteConsts.SCALE) var scale_type
 export (int) var octave_amount_up
 export (int) var octave_amount_down
 
@@ -52,11 +38,11 @@ func _ready():
 # returns: null
 func make_dictionary():
 	scales_dict = {
-		SCALE.Major: {true: positive_major, false: negative_major},
-		SCALE.Minor: {true: positive_minor, false: negative_minor},
-		SCALE.MajorPentatonic: {true: positive_pent_major, false: negative_pent_major},
-		SCALE.MinorPentatonic: {true: positive_pent_minor, false: negative_pent_minor},
-		SCALE.Custom: {true: positive_custom, false: negative_custom}
+		RNoteConsts.SCALE.Major: {true: positive_major, false: negative_major},
+		RNoteConsts.SCALE.Minor: {true: positive_minor, false: negative_minor},
+		RNoteConsts.SCALE.MajorPentatonic: {true: positive_pent_major, false: negative_pent_major},
+		RNoteConsts.SCALE.MinorPentatonic: {true: positive_pent_minor, false: negative_pent_minor},
+		RNoteConsts.SCALE.Custom: {true: positive_custom, false: negative_custom}
 	}
 
 # main function to call.
@@ -93,7 +79,7 @@ func get_is_note_above():
 # it's a different equation if you scaling up or down.
 # returns: float
 func get_semitone(note_is_above_root):
-	return ST_POS if note_is_above_root else ST_NEG
+	return RNoteConsts.ST_POS if note_is_above_root else RNoteConsts.ST_NEG
 
 # accesses the scale dictionary to get the scale array
 # to get a random note from.

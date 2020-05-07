@@ -57,6 +57,7 @@ config/icon="res://icon.png"
 [autoload]
 
 InputManager="*res://Godot-Touch-Input-Manager-0.5.3/InputManager.gd"
+RNoteConsts="*res://Scripts/RNoteConsts.gd"
 
 [display]
 

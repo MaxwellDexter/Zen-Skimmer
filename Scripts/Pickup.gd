@@ -14,6 +14,11 @@ func _ready():
 	sprite = get_node("Sprite")
 	speed_mod = randf() + 0.5 # between 0.5 and 1.5
 
+func prime_pickup(pos, audio_stream, sound_scale):
+	position = pos
+	audio.stream = audio_stream
+	random_note.scale_type = sound_scale
+
 func _on_Pickup_body_entered(body):
 	if body.get_name() == "Player" and not picked_up:
 		body.add_score()
