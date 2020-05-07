@@ -8,6 +8,7 @@ export (float) var drag_release_time
 export (float) var magnet_area_min
 export (float) var magnet_area_max
 export (float) var magnet_growth_rate
+export (float) var maximum_speed
 var dragging
 var holding_pos
 onready var timer_drag_release = get_node("Timer")
@@ -58,7 +59,8 @@ func touch(event):
 
 # signal method
 func drag(event):
-	if (event.speed.length() < drag_force_minimum):
+	if (event.speed.length() < drag_force_minimum
+		or linear_velocity.length() > maximum_speed):
 		return
 	
 	var normalised_speed = event.speed / maximum_drag_force
