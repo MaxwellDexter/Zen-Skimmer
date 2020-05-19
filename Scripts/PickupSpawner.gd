@@ -3,9 +3,12 @@ extends Node2D
 onready var pickup_node = preload("res://Nodes/Pickup.tscn")
 var pickups_per_row
 var current_pickups
+var max_pickups
 var stream
 var sound_scale
 signal pickups_gone_signal
+export (float) var min_ambience_volume
+export (float) var max_ambience_volume
 
 func _ready():
 	current_pickups = 0
@@ -41,12 +44,20 @@ func spawn_them_all(spawn_diameter):
 			# do maths
 			pos.x += space_between_pickups
 			current_pickups += 1
+	
+	max_pickups = current_pickups
 
-func pickup_deleted():
+func pickup_deleted(the_pickup):
 	current_pickups -= 1
 	if current_pickups < 1:
 		emit_signal("pickups_gone_signal")
+	else:
+		inform_pickups()
 
-func pickups_all_gone():
-	# signal dummy method
-	pass
+func inform_pickups():
+	var percentage = float(current_pickups) / float(max_pickups)
+	# using the max as an offset to get the corrent percentage
+	var volume = (min_ambience_volume - max_ambience_volume) * percentage + max_ambience_volume
+	
+	for child in get_children():
+		child.update_ambience(volume)

@@ -1,6 +1,7 @@
 extends Area2D
 
-var audio
+var pickup_audio
+var ambient_audio
 var sprite
 var picked_up
 var player
@@ -10,13 +11,17 @@ onready var random_note = get_node("Randomiser")
 
 func _ready():
 	picked_up = false
-	audio = get_node("Sound")
+	pickup_audio = get_node("Pickup Sound")
 	sprite = get_node("Sprite")
 	speed_mod = randf() + 0.5 # between 0.5 and 1.5
+	
+	ambient_audio = get_node("Ambient Noise")
+	var ambient_randomiser = get_node("RandomiserAmbient")
+	ambient_audio.set_pitch_scale(ambient_randomiser.get_random_note())
 
 func prime_pickup(pos, audio_stream, sound_scale):
 	position = pos
-	audio.stream = audio_stream
+	pickup_audio.stream = audio_stream
 	random_note.scale_type = sound_scale
 
 func _on_Pickup_body_entered(body):
@@ -30,12 +35,12 @@ func _on_AudioStreamPlayer2D_finished():
 	# sound is done
 	var parent = get_parent()
 	if parent.name == "Pickup Spawner":
-		parent.pickup_deleted()
+		parent.pickup_deleted(self)
 	queue_free()
 
 func play_sound():
-	audio.set_pitch_scale(random_note.get_random_note())
-	audio.play()
+	pickup_audio.set_pitch_scale(random_note.get_random_note())
+	pickup_audio.play()
 	
 func start_flying_to_player(player_obj):
 	player = player_obj
@@ -48,3 +53,6 @@ func fly_to_player(delta):
 		return
 	var smoothed_velocity = (player.position - position) * fly_speed * delta * speed_mod
 	position += smoothed_velocity
+
+func update_ambience(volume):
+	ambient_audio.set_volume_db(volume)
