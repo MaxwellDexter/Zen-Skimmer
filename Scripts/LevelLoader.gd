@@ -4,6 +4,7 @@ var current_level
 var player
 var pickup_spawner
 var wall_spawner
+signal colour_change(colour)
 
 func _ready():
 	current_level = 1
@@ -19,6 +20,8 @@ func new_level():
 	pickup_spawner.begin_level(level_data.diameter, level_data.pickups)
 	
 	wall_spawner.begin_level(level_data.diameter)
+	
+	emit_signal("colour_change", level_data.colour)
 	
 	reset_player(level_data.player_spawn.x, level_data.player_spawn.y)
 

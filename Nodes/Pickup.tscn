@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Pickup.gd" type="Script" id=1]
-[ext_resource path="res://Textures/temp_pickup.png" type="Texture" id=2]
+[ext_resource path="res://Textures/pickup_bw.png" type="Texture" id=2]
 [ext_resource path="res://Audio/SFX_Pickup_3.5.wav" type="AudioStream" id=3]
 [ext_resource path="res://Scripts/RandomNote.gd" type="Script" id=4]
 [ext_resource path="res://Audio/SFX_Pickup_Ambience.wav" type="AudioStream" id=5]
@@ -16,8 +16,7 @@ fly_speed = 6.5
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0.0293961, 0.0293941 )
-scale = Vector2( 0.22, 0.22 )
+scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 2 )
 
 [node name="Pickup Sound" type="AudioStreamPlayer2D" parent="."]
