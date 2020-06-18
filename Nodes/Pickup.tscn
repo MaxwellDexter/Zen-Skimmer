@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Pickup.gd" type="Script" id=1]
 [ext_resource path="res://Textures/pickup_bw.png" type="Texture" id=2]
@@ -7,6 +7,25 @@
 [ext_resource path="res://Audio/SFX_Pickup_Ambience.wav" type="AudioStream" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.99297, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+angular_velocity = 674.62
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 21.74
+scale = 6.0
+scale_curve = SubResource( 3 )
 
 [node name="Pickup" type="Area2D"]
 script = ExtResource( 1 )
@@ -43,5 +62,14 @@ octave_amount_up = 2
 octave_amount_down = 1
 positive_custom = [ 0, 7, 14, 21, 28 ]
 negative_custom = [ 7, 14 ]
+
+[node name="Particle" type="Particles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 4 )
 [connection signal="body_entered" from="." to="." method="_on_Pickup_body_entered"]
 [connection signal="finished" from="Pickup Sound" to="." method="_on_AudioStreamPlayer2D_finished"]
