@@ -4,6 +4,7 @@ var pickup_audio
 var ambient_audio
 var sprite
 var particles
+var ring_node
 var picked_up
 var player
 var speed_mod
@@ -19,6 +20,7 @@ func _ready():
 	pickup_audio = get_node("Pickup Sound")
 	sprite = get_node("Sprite")
 	particles = get_node("Particle")
+	ring_node = preload("res://Nodes/Ring.tscn")
 	speed_mod = randf() + 0.5 # between 0.5 and 1.5
 	
 	sound_done = false
@@ -41,6 +43,7 @@ func _on_Pickup_body_entered(body):
 		particles.set_emitting(true)
 		particle_shooting = true
 		picked_up = true
+		place_ring()
 
 func _on_AudioStreamPlayer2D_finished():
 	sound_done = true
@@ -71,3 +74,8 @@ func fly_to_player(delta):
 
 func update_ambience(volume):
 	ambient_audio.set_volume_db(volume)
+
+func place_ring():
+	var ring = ring_node.instance()
+	ring.set_pos(position)
+	get_node('/root') .add_child(ring)

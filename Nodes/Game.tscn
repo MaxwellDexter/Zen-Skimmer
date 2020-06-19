@@ -98,6 +98,7 @@ texture = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [node name="Particles 1" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
 motion_scale = Vector2( 0.8, 1 )
 
 [node name="Particles2D" type="Particles2D" parent="ParallaxBackground/Particles 1"]
