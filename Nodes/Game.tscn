@@ -71,6 +71,8 @@ current = true
 smoothing_enabled = true
 smoothing_speed = 7.4
 script = ExtResource( 3 )
+zoom_speed_regular = 0.001
+zoom_speed_trackpad = 0.1
 
 [node name="TailHolder" type="Node2D" parent="."]
 script = ExtResource( 4 )
