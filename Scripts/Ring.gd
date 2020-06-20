@@ -12,9 +12,7 @@ func _ready():
 
 func _process(delta):
 	if not tween.is_active():
-		print('goodbye cruel world!')
 		queue_free()
-		print(is_queued_for_deletion())
 
 func set_pos(pos):
 	position = pos
