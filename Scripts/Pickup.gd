@@ -49,7 +49,7 @@ func _on_AudioStreamPlayer2D_finished():
 	sound_done = true
 
 func delete_self():
-	var parent = get_parent()
+	var parent = get_parent().get_parent() # TODO: this is yucky
 	if parent.name == "Pickup Spawner":
 		parent.pickup_deleted(self)
 	queue_free()

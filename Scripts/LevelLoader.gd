@@ -3,24 +3,21 @@ extends Node2D
 var current_level
 var player
 var pickup_spawner
-var wall_spawner
 signal colour_change(colour)
+signal level_start(diameter, sides)
 
 func _ready():
 	current_level = 1
 	player = get_parent().find_node("Player")
 	pickup_spawner = get_child(0)
-	wall_spawner = get_child(1)
 	new_level()
 
 func new_level():
 	var level_data = load_level_from_file()
 	
 	pickup_spawner.set_audio(load_audio(level_data.sfx_pickup), RNoteConsts.SCALE.Custom)
-	pickup_spawner.begin_level(level_data.diameter, level_data.pickups)
 	
-	wall_spawner.begin_level(level_data.diameter)
-	
+	emit_signal("level_start", level_data.diameter, level_data.shape_sides)
 	emit_signal("colour_change", level_data.colour)
 	
 	reset_player(level_data.player_spawn.x, level_data.player_spawn.y)
@@ -45,7 +42,6 @@ func load_level_from_file():
 	file.open(path, File.READ)
 	var json = file.get_as_text()
 	var result_json = JSON.parse(json)
-	var result = {}
 	
 	if result_json.error == OK:  # If parse OK
 		var data = result_json.result

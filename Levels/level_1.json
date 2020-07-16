@@ -2,11 +2,11 @@
 	"id": 1,
 	"sfx_pickup": "SFX_Pickup_3.5",
 	"diameter": 2000,
-	"pickups": 20,
+	"shape_sides": 50,
 	"player_spawn":
 	{
 		"x": 0,
 		"y": 0
 	},
-	"colour": "#3333cc"
+	"colour": "#3333cc",
 }

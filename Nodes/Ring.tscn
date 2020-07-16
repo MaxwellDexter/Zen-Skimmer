@@ -9,6 +9,7 @@ shader = ExtResource( 2 )
 shader_param/outer_r = 0.0
 shader_param/inner_r = 0.0
 shader_param/colour = Vector3( 1, 1, 1 )
+shader_param/opacity = 0.0
 
 [node name="Ring" type="Sprite"]
 material = SubResource( 1 )

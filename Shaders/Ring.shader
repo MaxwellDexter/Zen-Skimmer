@@ -3,6 +3,7 @@ shader_type canvas_item;
 uniform float outer_r = 0.0;
 uniform float inner_r = 0.0;
 uniform vec3 colour = vec3(1.0, 1.0, 1.0);
+uniform float opacity = 0.0;
 
 void fragment()
 {
@@ -12,7 +13,7 @@ void fragment()
 	vec4 c;
 	
 	if (d < outer_r && d > inner_r)
-		c = vec4(colour, 1.0);
+		c = vec4(colour, opacity);
 	else
 		c = vec4(1.0, 1.0, 1.0, 0.0);
 	
